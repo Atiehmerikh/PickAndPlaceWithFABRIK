@@ -264,7 +264,7 @@ class Chain3d:
         if rotor[0] < -1:
             rotor[0] = -0.99
         needed_rotation = math.acos(rotor[0]) * 2 * (180 / np.pi)
-        self.rotations[loop] = needed_rotation
+        self.rotations[loop] = needed_rotation*(np.pi/180)
         if needed_rotation <= self.bone_twist_limit:
             # if the rotation is inside the limited
             return Mat.Mat().multiply_two_quaternion(rotor, outer_joint_orientation)

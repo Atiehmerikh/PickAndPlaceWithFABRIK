@@ -256,24 +256,25 @@ void StabilizingControl::inverseKinematics()
 
     if(inversekinematics_status>=0)
     {
-	//string path_fabrik = ros::package::getPath("panda_control");
-	string str = exec("python \"/home/atieh/PickAndPlaceWithFABRIK/src/panda_control/src/Main.py\"");
-     cout<<str;
+	    //string path_fabrik = ros::package::getPath("panda_control");
+        //cout<< pos_r[0] << endl << pos_r[1] << endl << pos_r[2] << endl;
+	    string str = exec(("python \"/home/atieh/Documents/PHD/PickAndPlaceWithFABRIK/src/panda_control/src/Main.py \"" + std::to_string(pos_r[0]) + " " + std::to_string(pos_r[1]) + " " + std::to_string(pos_r[2])).c_str());
+        cout<<str;
 
-      int counter = 0;
+        int counter = 0;
 
-      std::string s = str.substr(1, str.length());
-      std::string delimiter = ",";
+        std::string s = str.substr(1, str.length());
+        std::string delimiter = ",";
 
-      size_t pos = 0;
-      std::string token;
-      while ((pos = s.find(delimiter)) != std::string::npos) {
-         token = s.substr(0, pos);
-         float detected_q = std::stof(token);
-         q_r[counter] = detected_q;
-         counter++;
-         // std::cout << token << std::endl;
-         s.erase(0, pos + delimiter.length());
+        size_t pos = 0;
+        std::string token;
+        while ((pos = s.find(delimiter)) != std::string::npos) {
+            token = s.substr(0, pos);
+            float detected_q = std::stof(token);
+            q_r[counter] = detected_q;
+            counter++;
+            // std::cout << token << std::endl;
+            s.erase(0, pos + delimiter.length());
         }
         float detected_s = std::stof(s);
         q_r[counter] = detected_s;
